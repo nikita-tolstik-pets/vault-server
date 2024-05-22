@@ -1,0 +1,24 @@
+services:
+  mongodb:
+    container_name: 'keystorage_mongo_1'
+    build: ./mongodb_rs
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: keystorage
+      MONGO_REPLICA_HOST: localhost
+      MONGO_REPLICA_PORT: '27017'
+    ports:
+      - 27017:27017
+  cache:
+    container_name: 'keystorage_redis_1'
+    image: redis:7.2.3
+    command: redis-server
+    restart: always
+    volumes:
+      - redis-data:/var/lib/redis
+    ports:
+      - 6379:6379
+volumes:
+  redis-data:
